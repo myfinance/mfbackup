@@ -2,7 +2,7 @@ pipeline {
  agent none
 
  environment{
-   SERVICE_NAME = "mfbundle"
+   SERVICE_NAME = "mfbackup"
    ORGANIZATION_NAME = "myfinance"
    DOCKERHUB_USER = "holgerfischer"
    //Snapshot Version
@@ -44,15 +44,10 @@ pipeline {
      agent any
      steps {
        // sh 'envsubst < deploy.yaml | kubectl apply -f -'
-       sh 'envsubst < ./helm/mfbundle/Chart_template.yaml > ./helm/mfbundle/Chart.yaml'
-       sh 'helm dependency update ./helm/mfbundle'
-       sh 'helm package helm/mfbundle -u -d helmcharts/'
-       //sh 'helm repo index helmcharts/ --url ${TARGET_HELM_REPO}'
-       sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfbundle-${VERSION}.tgz -v'
-       //sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/index.yaml -v'
-       // install from local helm repo:
-       // helm upgrade -i --cleanup-on-fail mfbundle myrepo/mfbundle --set repository=192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance- --devel
-       sh 'helm upgrade -i --cleanup-on-fail mfbundle ./helm/mfbundle/ --set repository=${DOCKER_REPO}/${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
+       sh 'envsubst < ./helm/mfbackup/Chart_template.yaml > ./helm/mfbackup/Chart.yaml'
+       sh 'helm package helm/mfbackup -u -d helmcharts/'
+       sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfbackup-${VERSION}.tgz -v'
+       sh 'helm upgrade -i --cleanup-on-fail mfbackup ./helm/mfbackup/ --set repository=${DOCKER_REPO}/${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
      }
    }
  }
