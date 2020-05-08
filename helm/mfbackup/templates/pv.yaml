@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.pv.pvcname }}
+spec:
+  storageClassName: mfdumpstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pv.storagesize }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfsdumpstorage
+spec:
+  storageClassName: mfdumpstorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ .Values.pv.storagesize }}
+  hostPath:
+    path: {{ .Values.pv.storage }}
+    type: DirectoryOrCreate 
