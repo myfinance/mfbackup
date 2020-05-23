@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
+stage: dev
 
 image:
   repository: 192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance-
@@ -20,11 +21,12 @@ mfdump:
 # │ │ │ │ │
 # * * * * *  command to execute
 #  schedule: "1 22 * * 0" 
-  schedule: "10 * * * *" 
+  schedule: "55 * * * *" 
   dbpw: vulkan
 
 pv:
+  mntpath: /mnt/data/mf/
   pvcname: mfdumppvc
-  storage: /mnt/data/mf/prod_dumps/
+  storage: _dumps/
   storagesize: 5Gi 
 
