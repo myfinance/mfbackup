@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.pv.pvcname }}
+  name: {{ .Values.stage }}-{{ .Values.pv.pvcname }}
 spec:
-  storageClassName: mfdumpstorage
+  storageClassName: {{ .Values.stage }}-mfdumpstorage
   accessModes:
     - ReadWriteOnce
   resources:
@@ -15,9 +15,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfsdumpstorage
+  name: {{ .Values.stage }}-nfsdumpstorage
 spec:
-  storageClassName: mfdumpstorage
+  storageClassName: {{ .Values.stage }}-mfdumpstorage
   accessModes:
     - ReadWriteOnce
   capacity:

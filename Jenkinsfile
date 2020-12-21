@@ -13,6 +13,7 @@ pipeline {
    K8N_IP = "192.168.100.73"
    DOCKER_REPO = "${K8N_IP}:31003/repository/mydockerrepo/"
    TARGET_HELM_REPO = "http://${K8N_IP}:31001/repository/myhelmrepo/"
+   TEST_NAMESPACE = "mftest"
  }
 
  stages{
@@ -47,7 +48,7 @@ pipeline {
        sh 'envsubst < ./helm/mfbackup/Chart_template.yaml > ./helm/mfbackup/Chart.yaml'
        sh 'helm package helm/mfbackup -u -d helmcharts/'
        sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfbackup-${VERSION}.tgz -v'
-       sh 'helm upgrade -i --cleanup-on-fail mfbackup ./helm/mfbackup/ --set repository=${DOCKER_REPO}/${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
+       sh 'helm upgrade -i --cleanup-on-fail mfbackup ./helm/mfbackup/ -n ${TEST_NAMESPACE} --set stage=test --set repository=${DOCKER_REPO}/${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
      }
    }
  }

@@ -29,6 +29,6 @@ spec:
           volumes:
           - name: myfinancedumps
             persistentVolumeClaim:
-              claimName: {{ .Values.pv.pvcname }} 
+              claimName: {{ .Values.stage }}-{{ .Values.pv.pvcname }} 
           restartPolicy: OnFailure     
       backoffLimit: 4  
