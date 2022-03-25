@@ -1,12 +1,11 @@
 #!/bin/bash
 
 echo ******************************************************
-echo Starting-BACKUP
+echo Starting-RESTORE
 echo ******************************************************
-NOW="$(date +"%F")-$(date +"%T")"
 
-FILE="$DB_NAME-$NOW"
 
-mongodump --uri=$MONGODB_URI  --out=/mongodump/db/$FILE
+mongorestore --uri=$MONGODB_URI  --username=$MONGODB_USER --password=$MONGODB_PASSWORD --authenticationDatabase=admin --gzip --archive=/mongodump/$FILE
+
 
 sleep 30 | echo End-BACKUP
