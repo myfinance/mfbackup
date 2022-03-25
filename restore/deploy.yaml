@@ -37,7 +37,7 @@ spec:
     spec:
       containers: 
       - name: mfrestore
-        image: 192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance-mfmongobackup:0.17.0-alpha.11
+        image: 192.168.100.73:31003/repository/mydockerrepo/holgerfischer/myfinance-mfmongobackup:0.17.0-alpha.19
         command: ['sh', '-c',"./restore.sh"]  
         volumeMounts:
          - name: myfinancedumps
@@ -50,10 +50,12 @@ spec:
         - name:  MONGODB_USER
           value: root     
         - name:  MONGODB_PASSWORD
-          value: vulkan   
+          value: vulkan 
+        - name:  FILE
+          value: product-db-2022-03-25-15:28:04 
       restartPolicy: OnFailure  
       volumes:
       - name: myfinancedumps
         persistentVolumeClaim:
-          claimName: mfrestorepvc     
+          claimName: dev-mfrestorepvc     
   backoffLimit: 2   

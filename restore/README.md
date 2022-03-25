@@ -12,4 +12,4 @@ kubectl delete job.batch/mfrestore
 
 //edit the dump-filename in  deploy.yaml
 copy the deploy.yaml to the K8n Server
-kubectl apply -f deploy.yaml
+kubectl apply -f deploy.yaml //if you run the resore on an existing db then only inserts wil be performed no updates or delete. So you have to delete the databse first if you want a clean restore
