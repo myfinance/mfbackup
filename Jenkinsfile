@@ -42,7 +42,7 @@ pipeline {
        sh 'docker tag ${REPOSITORY_TAG} ${DOCKER_REPO}${REPOSITORY_TAG}'
        sh 'docker push ${DOCKER_REPO}${REPOSITORY_TAG}'
 
-       sh 'docker image build -t ${MONGO_REPOSITORY_TAG} .'
+       sh 'docker image build -t ${MONGO_REPOSITORY_TAG} ./mongo'
        sh 'docker tag ${MONGO_REPOSITORY_TAG} ${DOCKER_REPO}${MONGO_REPOSITORY_TAG}'
        sh 'docker push ${DOCKER_REPO}${MONGO_REPOSITORY_TAG}'
      }
