@@ -64,7 +64,7 @@ spec:
             - name: DB_NAME
               value: "product-db"
             - name:  MONGODB_URI
-              value: mongodb://192.168.100.73:30029/product-db               
+              value: mongodb://mfmongo:30029/product-db               
             volumeMounts:
             - name: myfinancedumps
               mountPath: /mongodump
