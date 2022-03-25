@@ -35,7 +35,11 @@ mfmongodump:
 # │ │ │ │ │
 # * * * * *  command to execute
   schedule: "* * * * *" 
-  dbpw: vulkan  
+  dbpw: vulkan 
+  dbuser: root 
+  dburi: 192.168.100.73
+  dbport: 30029
+  dbname: product-db
 
 pv:
   mntpath: /mnt/data/mf/

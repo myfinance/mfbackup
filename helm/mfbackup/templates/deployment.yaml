@@ -62,9 +62,13 @@ spec:
             command: ['sh', '-c',"./dump.sh"]             
             env:
             - name: DB_NAME
-              value: "product-db"
+              value: "{{ .Values.mfmongodump.dbname }}"
             - name:  MONGODB_URI
-              value: mongodb://mfmongo:30029/product-db               
+              value: mongodb://{{ .Values.mfmongodump.dburi }}:{{ .Values.mfmongodump.dbport }}/{{ .Values.mfmongodump.dbname }}     
+            - name:  MONGODB_USER
+              value: {{ .Values.mfmongodump.dbuser }}      
+            - name:  MONGODB_PASSWORD
+              value: {{ .Values.mfmongodump.dbpw }}                                      
             volumeMounts:
             - name: myfinancedumps
               mountPath: /mongodump
