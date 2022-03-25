@@ -23,9 +23,24 @@ mfdump:
   schedule: "1 22 * * 0" 
   dbpw: vulkan
 
+mfmongodump:
+  name: mfmongobackup
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                                       7 is also Sunday on some systems)
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *  command to execute
+  schedule: "* * * * *" 
+  dbpw: vulkan  
+
 pv:
   mntpath: /mnt/data/mf/
   pvcname: mfdumppvc
+  mongopvcname: mfmongodumppvc
   storage: _dumps/
   storagesize: 5Gi 
 

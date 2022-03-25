@@ -32,3 +32,44 @@ spec:
               claimName: {{ .Values.stage }}-{{ .Values.pv.pvcname }} 
           restartPolicy: OnFailure     
       backoffLimit: 4  
+
+---      
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mfmongoweeklydump
+spec:
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                                       7 is also Sunday on some systems)
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *  command to execute
+  schedule: "{{ .Values.mfmongodump.schedule }}"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers: 
+          - name: dump
+            image: "{{ .Values.image.repository }}{{ .Values.mfmongodump.name }}:{{ .Chart.AppVersion }}"               
+            env:
+            - name: DB_NAME
+              value: "product-db"
+            - name:  MONGODB_URI
+              value: mongodb://root:vulkan@mfmongo:30029/product-db               
+            volumeMounts:
+            - name: myfinancedumps
+              mountPath: /mongodump
+          volumes:
+          - name: myfinancedumps
+            persistentVolumeClaim:
+              claimName: {{ .Values.stage }}-{{ .Values.pv.mongopvcname }} 
+          restartPolicy: OnFailure     
+      backoffLimit: 4  

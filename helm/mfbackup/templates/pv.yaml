@@ -25,3 +25,33 @@ spec:
   hostPath:
     path: {{ .Values.pv.mntpath }}{{ .Values.stage }}{{ .Values.pv.storage }}
     type: DirectoryOrCreate 
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.stage }}-{{ .Values.pv.mongopvcname }}
+spec:
+  storageClassName: {{ .Values.stage }}-mfmongodumpstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pv.storagesize }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.stage }}-nfsmongodumpstorage
+spec:
+  storageClassName: {{ .Values.stage }}-mfmongodumpstorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ .Values.pv.storagesize }}
+  hostPath:
+    path: {{ .Values.pv.mntpath }}{{ .Values.stage }}{{ .Values.pv.storage }}
+    type: DirectoryOrCreate     
