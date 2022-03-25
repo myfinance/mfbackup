@@ -58,7 +58,8 @@ spec:
         spec:
           containers: 
           - name: dump
-            image: "{{ .Values.image.repository }}{{ .Values.mfmongodump.name }}:{{ .Chart.AppVersion }}"               
+            image: "{{ .Values.image.repository }}{{ .Values.mfmongodump.name }}:{{ .Chart.AppVersion }}"  
+            command: ['sh', '-c',"./dump.sh"]             
             env:
             - name: DB_NAME
               value: "product-db"
