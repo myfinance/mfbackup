@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mfrestorepvc
+  name: dev-mfrestorepvc
 spec:
-  storageClassName: mfrestorestorage
+  storageClassName: dev-mfrestorestorage
   accessModes:
     - ReadOnlyMany
   resources:
@@ -15,9 +15,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfsrestorestorage
+  name: dev-nfsrestorestorage
 spec:
-  storageClassName: mfrestorestorage
+  storageClassName: dev-mfrestorestorage
   accessModes:
     - ReadOnlyMany
   capacity:
